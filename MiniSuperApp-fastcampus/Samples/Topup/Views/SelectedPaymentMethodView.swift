@@ -1,3 +1,10 @@
+//
+//  SelectedPaymentMethodViewModel.swift
+//  MiniSuperApp
+//
+//  Created by Wonseok Lee on 2022/02/26.
+//
+
 import UIKit
 
 struct SelectedPaymentMethodViewModel {

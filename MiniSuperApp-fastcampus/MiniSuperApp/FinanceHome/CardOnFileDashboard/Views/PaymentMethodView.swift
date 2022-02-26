@@ -26,7 +26,7 @@ final class PaymentMethodView: UIView {
         return label
     }()
     
-    init(viewModel: PaymentMehodViewModel) {
+    init(viewModel: PaymentMethodViewModel) {
         super.init(frame: .zero)
         setupViews()
         

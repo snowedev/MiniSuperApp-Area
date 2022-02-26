@@ -71,7 +71,7 @@ final class CardOnFileDashboardViewController: UIViewController, CardOnFileDashb
         setupViews()
     }
     
-    func update(with viewModels: [PaymentMehodViewModel]) {
+    func update(with viewModels: [PaymentMethodViewModel]) {
         cardOnFileStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
 
         // [PaymentMehodViewModel] -> [PaymentMehodView]
@@ -79,9 +79,8 @@ final class CardOnFileDashboardViewController: UIViewController, CardOnFileDashb
         views.forEach {
             $0.roundCorners()
             cardOnFileStackView.addArrangedSubview($0)
-            cardOnFileStackView.addArrangedSubview(addMethodButton)
         }
-        
+		cardOnFileStackView.addArrangedSubview(addMethodButton)
         let heightConstraints = views.map { $0.heightAnchor.constraint(equalToConstant: 60) }
         NSLayoutConstraint.activate(heightConstraints)
     }

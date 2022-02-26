@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct PaymentMehodViewModel {
+struct PaymentMethodViewModel {
     let name: String
     let digits: String
     let color: UIColor

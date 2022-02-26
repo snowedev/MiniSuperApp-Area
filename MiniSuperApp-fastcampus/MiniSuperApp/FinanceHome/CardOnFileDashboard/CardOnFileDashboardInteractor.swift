@@ -15,7 +15,7 @@ protocol CardOnFileDashboardRouting: ViewableRouting {
 protocol CardOnFileDashboardPresentable: Presentable {
     var listener: CardOnFileDashboardPresentableListener? { get set }
     
-    func update(with viewModels: [PaymentMehodViewModel])
+    func update(with viewModels: [PaymentMethodViewModel])
 }
 
 protocol CardOnFileDashboardListener: AnyObject {
@@ -49,7 +49,7 @@ final class CardOnFileDashboardInteractor: PresentableInteractor<CardOnFileDashb
         
         dependency.cardOnFileRepository.cardOnFile.sink { methods in
             // 화면에 최대 5개의 카드만 넘겨줌
-            let viewModels = methods.prefix(3).map(PaymentMehodViewModel.init)
+            let viewModels = methods.prefix(3).map(PaymentMethodViewModel.init)
             self.presenter.update(with: viewModels)
         }.store(in: &cancellables)
     }

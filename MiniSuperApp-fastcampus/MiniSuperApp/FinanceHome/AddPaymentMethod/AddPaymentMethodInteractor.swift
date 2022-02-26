@@ -1,5 +1,5 @@
 //
-//  AddPaymentMethodRoutingInteractor.swift
+//  AddPaymentMethodInteractor.swift
 //  MiniSuperApp
 //
 //  Created by Wonseok Lee on 2022/02/26.
@@ -8,17 +8,17 @@
 import ModernRIBs
 import Combine
 
-protocol AddPaymentMethodRoutingRouting: ViewableRouting {
+protocol AddPaymentMethodRouting: ViewableRouting {
     // TODO: Declare methods the interactor can invoke to manage sub-tree via the router.
 }
 
-protocol AddPaymentMethodRoutingPresentable: Presentable {
-    var listener: AddPaymentMethodRoutingPresentableListener? { get set }
+protocol AddPaymentMethodPresentable: Presentable {
+    var listener: AddPaymentMethodPresentableListener? { get set }
     // TODO: Declare methods the interactor can invoke the presenter to present data.
 }
 
-protocol AddPaymentMethodRoutingListener: AnyObject {
-    func addPaymentMethodDidTapClose()
+protocol AddPaymentMethodListener: AnyObject {
+	func addPaymentMethodDidTapClose()
 	func addPaymentMethodDidAddCard(paymentMethod: PaymentMethod)
 }
 
@@ -26,33 +26,33 @@ protocol AddPaymentMethodInteractorDependency {
 	var cardOnFileRepository: CardOnFileRepository { get }
 }
 
-final class AddPaymentMethodRoutingInteractor: PresentableInteractor<AddPaymentMethodRoutingPresentable>, AddPaymentMethodRoutingInteractable, AddPaymentMethodRoutingPresentableListener {
+final class AddPaymentMethodInteractor: PresentableInteractor<AddPaymentMethodPresentable>, AddPaymentMethodInteractable, AddPaymentMethodPresentableListener {
 
-    weak var router: AddPaymentMethodRoutingRouting?
-    weak var listener: AddPaymentMethodRoutingListener?
+    weak var router: AddPaymentMethodRouting?
+    weak var listener: AddPaymentMethodListener?
 
 	private let dependency: AddPaymentMethodInteractorDependency
 	private var cancellables: Set<AnyCancellable>
-
+	
 	init(
-		presenter: AddPaymentMethodRoutingPresentable,
+		presenter: AddPaymentMethodPresentable,
 		dependency: AddPaymentMethodInteractorDependency
 	) {
 		self.dependency = dependency
 		self.cancellables = .init()
-        super.init(presenter: presenter)
-        presenter.listener = self
-    }
+		super.init(presenter: presenter)
+		presenter.listener = self
+	}
 
-    override func didBecomeActive() {
-        super.didBecomeActive()
-        // TODO: Implement business logic here.
-    }
+	override func didBecomeActive() {
+		super.didBecomeActive()
+		// TODO: Implement business logic here.
+	}
 
-    override func willResignActive() {
-        super.willResignActive()
-        // TODO: Pause any business logic.
-    }
+	override func willResignActive() {
+		super.willResignActive()
+		// TODO: Pause any business logic.
+	}
 	
 	func didTapClose() {
 		listener?.addPaymentMethodDidTapClose()

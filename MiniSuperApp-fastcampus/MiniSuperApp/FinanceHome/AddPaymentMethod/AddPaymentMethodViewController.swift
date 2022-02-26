@@ -1,5 +1,5 @@
 //
-//  AddPaymentMethodRoutingViewController.swift
+//  AddPaymentMethodViewController.swift
 //  MiniSuperApp
 //
 //  Created by Wonseok Lee on 2022/02/26.
@@ -8,14 +8,14 @@
 import ModernRIBs
 import UIKit
 
-protocol AddPaymentMethodRoutingPresentableListener: AnyObject {
+protocol AddPaymentMethodPresentableListener: AnyObject {
 	func didTapClose()
 	func didTapConfirm(with number: String, cvc: String, expiry: String)
 }
 
-final class AddPaymentMethodRoutingViewController: UIViewController, AddPaymentMethodRoutingPresentable, AddPaymentMethodRoutingViewControllable {
+final class AddPaymentMethodViewController: UIViewController, AddPaymentMethodPresentable, AddPaymentMethodViewControllable {
 	
-	weak var listener: AddPaymentMethodRoutingPresentableListener?
+	weak var listener: AddPaymentMethodPresentableListener?
 	
 	private let cardNumberTextField: UITextField = {
 		let textField = makeTextField()
@@ -128,3 +128,4 @@ final class AddPaymentMethodRoutingViewController: UIViewController, AddPaymentM
 		listener?.didTapClose()
 	}
 }
+

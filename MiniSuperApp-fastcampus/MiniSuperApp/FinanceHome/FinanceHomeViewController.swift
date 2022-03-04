@@ -32,6 +32,10 @@ final class FinanceHomeViewController: UIViewController, FinanceHomePresentable,
         
         setupViews()
     }
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+	}
     
     func setupViews() {
         title = "슈퍼페이"

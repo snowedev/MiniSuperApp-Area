@@ -88,6 +88,10 @@ final class SuperPayDashboardViewController: UIViewController, SuperPayDashboard
         super.init(coder: coder)
         setupViews()
     }
+	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+	}
     
     private func setupViews() {
         view.addSubview(headerStackView)

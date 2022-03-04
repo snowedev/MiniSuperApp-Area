@@ -10,6 +10,7 @@ import ModernRIBs
 protocol TopupDependency: Dependency {
     var topupBaseViewController: ViewControllable { get }
 	var cardOnFileRepository: CardOnFileRepository { get }
+	var superPayRepository: SuperPayRespository { get }
 }
 
 final class TopupComponent: Component<TopupDependency>,
@@ -18,6 +19,7 @@ final class TopupComponent: Component<TopupDependency>,
 							EnterAmountDependency,
 							CardOnFileDependency {
 	var selectedPaymentMethods: ReadOnlyCurrentValuePublisher<PaymentMethod> { paymentMethodStream }
+	var superPayRepository: SuperPayRespository { dependency.superPayRepository }
 	var cardOnFileRepository: CardOnFileRepository { dependency.cardOnFileRepository }
     fileprivate var topupBaseViewController: ViewControllable { dependency.topupBaseViewController }
 	

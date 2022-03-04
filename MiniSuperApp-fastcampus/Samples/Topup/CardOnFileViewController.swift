@@ -27,6 +27,11 @@ final class CardOnFileViewController: UIViewController, CardOnFilePresentable, C
 		setupViews()
 	}
 	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		print("LOG>> viewDidLoad", listener)
+	}
+	
 	private var viewModels: [PaymentMethodViewModel] = []
 	
 	private lazy var tableView: UITableView = {

@@ -9,16 +9,18 @@ import ModernRIBs
 
 protocol TopupRouting: Routing {
     func cleanupViews()
-	func attachAddPaymentMethod()
+	func attachAddPaymentMethod(closeButtonType: DismissButtonType)
 	func detachAddpaymentMethod()
 	func attachEnterAmount()
 	func detachEnterAmount()
 	func attachCardOnFile(paymentMethods: [PaymentMethod])
 	func detachCardOnFile()
+	func popToRoot()
 }
 
 protocol TopupListener: AnyObject {
     func topupDidClose()
+	func topupDidFinish()
 }
 
 protocol TopupInteractorDependency {
@@ -32,6 +34,8 @@ final class TopupInteractor: Interactor, TopupInteractable, AdaptivePresenttatio
     weak var listener: TopupListener?
 	
 	let presentationDelegateProxy: AdaptivePresenttationControllerDelegateProxy
+	
+	private var isEnterAmountRoot: Bool = false
 	
 	private var paymentMethods: [PaymentMethod] {
 		dependency.cardOnFileRepository.cardOnFile.value
@@ -52,11 +56,13 @@ final class TopupInteractor: Interactor, TopupInteractable, AdaptivePresenttatio
 		
 		if let card = dependency.cardOnFileRepository.cardOnFile.value.first {
 			// 금액 입력 화면
+			isEnterAmountRoot = true
 			dependency.paymentMethodStream.send(card)
 			router?.attachEnterAmount()
 		} else {
 			// 카드 추가 화면
-			router?.attachAddPaymentMethod()
+			isEnterAmountRoot = false
+			router?.attachAddPaymentMethod(closeButtonType: .close)
 		}
         
     }
@@ -74,11 +80,20 @@ final class TopupInteractor: Interactor, TopupInteractable, AdaptivePresenttatio
 	// MARK: AddPaymentMethodListener
 	func addPaymentMethodDidTapClose() {
 		router?.detachAddpaymentMethod()
-		listener?.topupDidClose()
+		if isEnterAmountRoot == false {
+			listener?.topupDidClose()
+		}
 	}
 	
 	func addPaymentMethodDidAddCard(paymentMethod: PaymentMethod) {
+		dependency.paymentMethodStream.send(paymentMethod)
 		
+		if isEnterAmountRoot {
+			router?.popToRoot()
+		} else {
+			isEnterAmountRoot = true
+			router?.attachEnterAmount()
+		}
 	}
 	
 	// MARK: EnterAmountListener
@@ -91,13 +106,17 @@ final class TopupInteractor: Interactor, TopupInteractable, AdaptivePresenttatio
 		router?.attachCardOnFile(paymentMethods: paymentMethods)
 	}
 	
+	func enterAmountDidFinishTopup() {
+		listener?.topupDidFinish()
+	}
+	
 	// MARK: CardOnFileListener
 	func cardOnFileDidTapClose() {
 		router?.detachCardOnFile()
 	}
 	
 	func cardOnFileDidTapAddCard() {
-		// TODO: attach add card
+		router?.attachAddPaymentMethod(closeButtonType: .back)
 	}
 	
 	func cardOnFileDidSelect(at index: Int) {

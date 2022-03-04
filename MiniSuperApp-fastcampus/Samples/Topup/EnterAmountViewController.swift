@@ -80,6 +80,10 @@ final class EnterAmountViewController: UIViewController, EnterAmountPresentable,
 		setupViews()
 	}
 	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+	}
+	
 	private func setupViews() {
 		title = "충전하기"
 		view.backgroundColor = .backgroundColor

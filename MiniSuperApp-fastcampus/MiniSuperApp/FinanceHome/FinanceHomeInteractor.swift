@@ -40,7 +40,7 @@ final class FinanceHomeInteractor: PresentableInteractor<FinanceHomePresentable>
     
     override func didBecomeActive() {
         super.didBecomeActive()
-        
+		
         router?.attachSuperPayDashboard()
         router?.attachCardOnFileDashboard()
     }
@@ -74,6 +74,10 @@ final class FinanceHomeInteractor: PresentableInteractor<FinanceHomePresentable>
 	
 	// MARK: TopupListener
 	func topupDidClose() {
+		router?.detachTopup()
+	}
+	
+	func topupDidFinish() {
 		router?.detachTopup()
 	}
 }
